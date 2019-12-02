@@ -1,0 +1,8 @@
+{
+  "name": "react-ch",
+  "version": "0.0.0",
+  "description": "Event channels for React",
+  "author": "Alec Larson",
+  "license": "MIT",
+  "repository": "alloc/react-ch"
+}
