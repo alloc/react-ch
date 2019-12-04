@@ -4,5 +4,34 @@
   "description": "Event channels for React",
   "author": "Alec Larson",
   "license": "MIT",
-  "repository": "alloc/react-ch"
+  "repository": "alloc/react-ch",
+  "scripts": {
+    "build": "tsc -p .",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@alloc/is": "^1.2.0",
+    "typescript": "^3.7.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
+    "@babel/preset-typescript": "^7.7.4",
+    "@testing-library/react": "^9.3.2",
+    "@types/jest": "^24.0.23",
+    "@types/react": "^16.9.14",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "tslint": "^5.20.1",
+    "tslint-mango": "^0.1.12",
+    "typescript-snapshots-plugin": "^1.7.0"
+  },
+  "peerDependencies": {
+    "react": "*"
+  }
 }

@@ -1,0 +1,62 @@
+import is from '@alloc/is'
+import React from 'react'
+import { Channel } from './Channel'
+import { ChannelEffect } from './types'
+
+/** Add an effect to a channel */
+export function useChannel<T, U>(
+  channel: Channel<T, U>,
+  effect: ChannelEffect<T, U>,
+  deps?: any[]
+): void
+
+/** Create a channel */
+export function useChannel<T, U>(name?: string): Channel<T, U>
+
+/** Create a channel with an effect */
+export function useChannel<T, U>(
+  effect: ChannelEffect<T, U>,
+  deps?: any[]
+): Channel<T, U>
+
+/** Create a channel with an effect */
+export function useChannel<T, U>(
+  name: string,
+  effect: ChannelEffect<T, U>,
+  deps?: any[]
+): Channel<T, U>
+
+/** @internal */
+export function useChannel(
+  arg1?: string | Channel | ChannelEffect,
+  arg2?: ChannelEffect | any[],
+  arg3?: any[]
+) {
+  const name = is.string(arg1) ? arg1 : ''
+  const channel =
+    arg1 instanceof Channel ? arg1 : React.useState(() => new Channel(name))[0]
+
+  const effect: any = arg1 !== channel && arg1 !== name ? arg1 : arg2
+  if (effect) {
+    // Replace the effect without changing call order.
+    const effectRef = React.useRef<ChannelEffect>(effect)
+    React.useEffect(
+      () => {
+        effectRef.current = effect
+      },
+      // The deps array decides when the effect is replaced.
+      is.array(arg2) ? arg2 : arg3
+    )
+
+    // Start listening on commit, and stop on unmount.
+    React.useEffect(
+      () => channel.on((...args) => effectRef.current(...args)).dispose,
+      []
+    )
+  }
+
+  // Return the channel only if we created it.
+  if (arg1 !== channel) {
+    return channel
+  }
+}

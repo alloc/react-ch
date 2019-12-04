@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Channel can pass many values to listeners 1`] = `
+Array [
+  Array [
+    Array [
+      1,
+      2,
+    ],
+    Array [
+      3,
+      4,
+    ],
+  ],
+  Array [
+    Array [
+      1,
+      2,
+    ],
+    Array [
+      3,
+      4,
+    ],
+  ],
+]
+`;
+
+exports[`Channel can pass nothing to listeners 1`] = `
+Array [
+  Array [
+    Array [],
+    Array [],
+  ],
+  Array [
+    Array [],
+    Array [],
+  ],
+]
+`;
+
+exports[`Channel can remove a listener during emit 1`] = `
+Array [
+  Array [
+    Array [],
+  ],
+]
+`;
+
+exports[`Channel when a listener is added with .once() only calls the listener once 1`] = `Array []`;
