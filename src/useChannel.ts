@@ -1,5 +1,6 @@
 import is from '@alloc/is'
 import React from 'react'
+import { useLayoutEffect } from 'react-layout-effect'
 import { Channel } from './Channel'
 import { ChannelEffect } from './types'
 
@@ -40,7 +41,7 @@ export function useChannel(
   if (effect) {
     // Replace the effect without changing call order.
     const effectRef = React.useRef<ChannelEffect>(effect)
-    React.useEffect(
+    useLayoutEffect(
       () => {
         effectRef.current = effect
       },
@@ -49,7 +50,7 @@ export function useChannel(
     )
 
     // Start listening on commit, and stop on unmount.
-    React.useEffect(
+    useLayoutEffect(
       () => channel.on((...args) => effectRef.current(...args)).dispose,
       []
     )

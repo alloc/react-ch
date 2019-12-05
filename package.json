@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@alloc/is": "^1.2.0",
+    "react-layout-effect": "^1.0.3",
     "typescript": "^3.7.2"
   },
   "devDependencies": {
