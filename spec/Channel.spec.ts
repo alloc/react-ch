@@ -1,4 +1,5 @@
 import is from '@alloc/is'
+import flushMicrotasks from '@testing-library/react/dist/flush-microtasks'
 import { Channel } from '../src/Channel'
 
 const getCalls = (channel: Channel) =>
@@ -48,6 +49,35 @@ describe('Channel', () => {
       const test = new Channel()
       test.once(jest.fn())
       expect(getCalls(test)).toMatchSnapshot()
+    })
+  })
+
+  describe('when effects return promises', () => {
+    it('wraps those promises with Promise.all', async () => {
+      const test = new Channel<void, number>()
+      const promises: { resolve(): void }[] = []
+      const createPromise = <T>(value: T) =>
+        new Promise<T>(resolve =>
+          promises.push({
+            resolve: () => resolve(value),
+          })
+        )
+
+      test.on(() => createPromise(1))
+      test.on(() => createPromise(2))
+
+      let result: any[] | undefined
+      test().then(value => {
+        result = value
+      })
+
+      await flushMicrotasks()
+      expect(result).toBeUndefined()
+
+      promises.forEach(p => p.resolve())
+
+      await flushMicrotasks()
+      expect(result).toEqual([1, 2])
     })
   })
 })
