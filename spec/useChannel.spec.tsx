@@ -70,7 +70,7 @@ describe('useChannel', () => {
           return null
         }
         render(<Test />)
-        expect(effect.mock.calls).toEqual([[3]])
+        expect(effect.mock.calls).toEqual([[2], [3]])
       })
 
       it('stops reacting after unmount', () => {
