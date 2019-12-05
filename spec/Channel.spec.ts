@@ -8,7 +8,7 @@ const getCalls = (channel: Channel) =>
   ).filter(Boolean)
 
 describe('Channel', () => {
-  it('can pass many values to listeners', () => {
+  it('can pass variable arguments to effect functions', () => {
     const test = new Channel<[number, number]>()
     test.on(jest.fn())
     test.on(jest.fn())
@@ -17,7 +17,7 @@ describe('Channel', () => {
     expect(getCalls(test)).toMatchSnapshot()
   })
 
-  it('can pass nothing to listeners', () => {
+  it('can pass nothing to effect functions', () => {
     const test = new Channel<void>()
     test.on(jest.fn())
     test.on(jest.fn())
@@ -26,7 +26,7 @@ describe('Channel', () => {
     expect(getCalls(test)).toMatchSnapshot()
   })
 
-  it('can remove a listener during emit', () => {
+  it('can remove an effect during emit', () => {
     const test = new Channel()
     const sub = test.on(() => sub.dispose())
     test.on(jest.fn())
@@ -34,7 +34,7 @@ describe('Channel', () => {
     expect(getCalls(test)).toMatchSnapshot()
   })
 
-  describe('when no listeners exist', () => {
+  describe('when no effects exist', () => {
     it('resolves with an empty array', async () => {
       const test = new Channel()
       const promise = test()
@@ -43,8 +43,8 @@ describe('Channel', () => {
     })
   })
 
-  describe('when a listener is added with .once()', () => {
-    it('only calls the listener once', () => {
+  describe('when an effect is added with .once()', () => {
+    it('only calls the effect once', () => {
       const test = new Channel()
       test.once(jest.fn())
       expect(getCalls(test)).toMatchSnapshot()
