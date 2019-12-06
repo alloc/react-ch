@@ -5,6 +5,10 @@
   "author": "Alec Larson",
   "license": "MIT",
   "repository": "alloc/react-ch",
+  "main": "dist/index.js",
+  "react-native": {
+    "dist/index.js": "src/index.ts"
+  },
   "scripts": {
     "build": "tsc -p .",
     "test": "jest"
