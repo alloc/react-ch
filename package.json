@@ -11,6 +11,8 @@
   },
   "scripts": {
     "build": "tsc -p .",
+    "prepare": "yarn build",
+    "prepublishOnly": "yarn test",
     "test": "jest"
   },
   "dependencies": {
