@@ -1,3 +1,4 @@
+import is from '@alloc/is'
 import { AsyncFunction, ChannelEffect, DisposableEffect, Tuple } from './types'
 
 export interface Channel<T = any, U = any> {
@@ -23,14 +24,25 @@ export class Channel<T = any, U = any> {
   /** Override this to wrap every channel emitter. */
   static wrapEmit: AsyncFunction = emit => emit
 
-  constructor(name?: string) {
-    const effects = new Set<ChannelEffect<T, U>>()
+  constructor(name?: string, effect?: ChannelEffect<T, U>)
+  constructor(effect: ChannelEffect<T, U>)
+  constructor(arg1?: string | ChannelEffect, arg2?: ChannelEffect) {
+    const effects = new Set<ChannelEffect>()
     const channel: any = Channel.wrapEmit((...args: Tuple<T>) =>
       Promise.all(Array.from(effects, effect => effect(...args)))
     )
 
     Object.setPrototypeOf(channel, Channel.prototype)
-    if (name) Object.defineProperty(channel, 'name', { value: name })
+    if (arg1) {
+      if (is.string(arg1)) {
+        Object.defineProperty(channel, 'name', { value: name })
+      } else {
+        effects.add(arg1)
+      }
+    }
+    if (arg2) {
+      effects.add(arg2)
+    }
     channel.effects = effects
     return channel
   }
