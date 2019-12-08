@@ -7,6 +7,13 @@ export interface Channel<T = any, U = any> {
 
 /**
  * Channels allow for loose coupling between a function call and its effect(s).
+ *
+ * Its `T` type is either the first and only argument type passed to the channel
+ * (eg: `T = number`), or an array type representing varargs of the channel
+ * (eg: `T = [number, string] | number[]`).
+ *
+ * Its `U` type is the expected return type of any effect functions that react
+ * to the channel (eg: `U = Promise<void> | void`).
  */
 export class Channel<T = any, U = any> {
   /** The channel name. Useful for debugging. */
