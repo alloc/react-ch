@@ -35,7 +35,7 @@ export class Channel<T = any, U = any> {
     Object.setPrototypeOf(channel, Channel.prototype)
     if (arg1) {
       if (is.string(arg1)) {
-        Object.defineProperty(channel, 'name', { value: name })
+        Object.defineProperty(channel, 'name', { value: arg1 })
       } else {
         effects.add(arg1)
       }
