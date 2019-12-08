@@ -1,5 +1,5 @@
 import is from '@alloc/is'
-import flushMicrotasks from '@testing-library/react/dist/flush-microtasks'
+import { flushMicroTasks } from 'flush-microtasks'
 import { Channel } from '../src/Channel'
 
 const getCalls = (channel: Channel) =>
@@ -71,12 +71,12 @@ describe('Channel', () => {
         result = value
       })
 
-      await flushMicrotasks()
+      await flushMicroTasks()
       expect(result).toBeUndefined()
 
       promises.forEach(p => p.resolve())
 
-      await flushMicrotasks()
+      await flushMicroTasks()
       expect(result).toEqual([1, 2])
     })
   })
