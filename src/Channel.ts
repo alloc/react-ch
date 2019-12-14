@@ -67,6 +67,3 @@ export class Channel<T = any, U = any> {
     return once
   }
 }
-
-const ch = new Channel()
-ch.name
