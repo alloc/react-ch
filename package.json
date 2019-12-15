@@ -9,6 +9,10 @@
   "react-native": {
     "dist/index.js": "src/index.ts"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "tsc -p .",
     "prepare": "yarn build",
