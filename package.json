@@ -16,7 +16,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@alloc/is": "^1.2.0",
+    "@alloc/is": "^2.0.0",
     "react-layout-effect": "^1.0.3"
   },
   "devDependencies": {

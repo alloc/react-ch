@@ -1,4 +1,4 @@
-import is from '@alloc/is'
+import { is } from '@alloc/is'
 import { flushMicroTasks } from 'flush-microtasks'
 import { Channel } from '../src/Channel'
 
@@ -39,7 +39,7 @@ describe('Channel', () => {
     it('resolves with an empty array', async () => {
       const test = new Channel()
       const promise = test()
-      expect(is(promise)).toBe('Promise')
+      expect(is.promise(promise)).toBeTruthy()
       expect(await promise).toEqual([])
     })
   })

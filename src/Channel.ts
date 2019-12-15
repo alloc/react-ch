@@ -1,4 +1,4 @@
-import is from '@alloc/is'
+import { is } from '@alloc/is'
 import { AsyncFunction, ChannelEffect, DisposableEffect, Tuple } from './types'
 
 export interface Channel<T = any, U = any> {

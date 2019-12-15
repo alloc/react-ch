@@ -1,4 +1,4 @@
-import is from '@alloc/is'
+import { is } from '@alloc/is'
 import React from 'react'
 import { useLayoutEffect } from 'react-layout-effect'
 import { Channel } from './Channel'
