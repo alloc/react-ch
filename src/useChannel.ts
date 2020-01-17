@@ -4,10 +4,12 @@ import { useLayoutEffect } from 'react-layout-effect'
 import { Channel } from './Channel'
 import { ChannelEffect } from './types'
 
+const noop = Function.prototype
+
 /** Add an effect to a channel */
 export function useChannel<T, U>(
   channel: Channel<T, U>,
-  effect: ChannelEffect<T, U>,
+  effect: ChannelEffect<T, U> | undefined,
   deps?: any[]
 ): void
 
@@ -23,7 +25,7 @@ export function useChannel<T, U>(
 /** Create a channel with an effect */
 export function useChannel<T, U>(
   name: string,
-  effect: ChannelEffect<T, U>,
+  effect: ChannelEffect<T, U> | undefined,
   deps?: any[]
 ): Channel<T, U>
 
@@ -38,12 +40,12 @@ export function useChannel(
     arg1 instanceof Channel ? arg1 : React.useState(() => new Channel(name))[0]
 
   const effect: any = arg1 !== channel && arg1 !== name ? arg1 : arg2
-  if (effect) {
+  if (arg1 == effect || arguments.length > 1) {
     // Replace the effect without changing call order.
     const effectRef = React.useRef<ChannelEffect>(effect)
     useLayoutEffect(
       () => {
-        effectRef.current = effect
+        effectRef.current = effect || noop
       },
       // The deps array decides when the effect is replaced.
       is.array(arg2) ? arg2 : arg3
