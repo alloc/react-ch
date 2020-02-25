@@ -148,4 +148,46 @@ describe('useChannel', () => {
       expect(calls).toEqual([1, 0, 2, 0])
     })
   })
+
+  describe('when 2+ args are passed', () => {
+    describe('and the 1st arg is undefined', () => {
+      it('does nothing', () => {
+        let res: any
+        const Test = () => {
+          let arg1: Channel<number> | undefined
+          res = useChannel(arg1, () => {})
+          return null
+        }
+        render(<Test />)
+        expect(res).toBeUndefined()
+      })
+    })
+
+    describe('and the 2nd arg is undefined', () => {
+      it('does nothing', () => {
+        let res: any
+        const didTest = new Channel<number>()
+        const Test = () => {
+          let arg2: ChannelEffect<number> | undefined
+          res = useChannel(didTest, arg2)
+          return null
+        }
+        render(<Test />)
+        expect(res).toBeUndefined()
+        expect(() => didTest(1)).not.toThrow()
+      })
+    })
+
+    describe('and both args are undefined', () => {
+      it('does nothing', () => {
+        let res: any
+        const Test = () => {
+          res = useChannel(undefined, undefined)
+          return null
+        }
+        render(<Test />)
+        expect(res).toBeUndefined()
+      })
+    })
+  })
 })
