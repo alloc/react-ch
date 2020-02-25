@@ -36,13 +36,16 @@ export function useChannel(
   arg3?: any[]
 ) {
   const name = is.string(arg1) ? arg1 : ''
+
   const channel =
     arguments.length > 1 && (arg1 == null || arg1 instanceof Channel)
       ? arg1
       : React.useState(() => new Channel(name))[0]
 
-  const effect: any = arg1 !== channel && arg1 !== name ? arg1 : arg2
-  if (arg1 == effect || arguments.length > 1) {
+  const effect: any =
+    channel && arg1 !== channel && is.function(arg1) ? arg1 : arg2
+
+  if (arguments.length > 1 || (effect && arg1 == effect)) {
     // Replace the effect without changing call order.
     const effectRef = React.useRef<ChannelEffect>(effect)
     useLayoutEffect(
