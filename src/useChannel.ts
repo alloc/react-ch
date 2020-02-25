@@ -8,7 +8,7 @@ const noop = Function.prototype
 
 /** Add an effect to a channel */
 export function useChannel<T, U>(
-  channel: Channel<T, U>,
+  channel: Channel<T, U> | undefined,
   effect: ChannelEffect<T, U> | undefined,
   deps?: any[]
 ): void
@@ -37,7 +37,9 @@ export function useChannel(
 ) {
   const name = is.string(arg1) ? arg1 : ''
   const channel =
-    arg1 instanceof Channel ? arg1 : React.useState(() => new Channel(name))[0]
+    arguments.length > 1 && (arg1 == null || arg1 instanceof Channel)
+      ? arg1
+      : React.useState(() => new Channel(name))[0]
 
   const effect: any = arg1 !== channel && arg1 !== name ? arg1 : arg2
   if (arg1 == effect || arguments.length > 1) {
@@ -53,8 +55,9 @@ export function useChannel(
 
     // Start listening on commit, and stop on unmount.
     useLayoutEffect(
-      () => channel.on((...args) => effectRef.current(...args)).dispose,
-      []
+      () =>
+        channel && channel.on((...args) => effectRef.current(...args)).dispose,
+      [channel]
     )
   }
 
