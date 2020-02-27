@@ -1,8 +1,8 @@
 import { is } from '@alloc/is'
-import { AsyncFunction, ChannelEffect, DisposableEffect, Tuple } from './types'
+import { AsyncFunction, ChannelEffect, DisposableEffect } from './types'
 
 export interface Channel<T = any, U = any> {
-  (...args: Tuple<T>): Promise<U[]>
+  (...args: Parameters<ChannelEffect<T>>): Promise<U[]>
   once(effect: ChannelEffect<T, U>): DisposableEffect<T, U>
 }
 
@@ -28,7 +28,7 @@ export class Channel<T = any, U = any> {
   constructor(effect: ChannelEffect<T, U>)
   constructor(arg1?: string | ChannelEffect, arg2?: ChannelEffect) {
     const effects = new Set<ChannelEffect>()
-    const channel: any = Channel.wrapEmit((...args: Tuple<T>) =>
+    const channel: any = Channel.wrapEmit((...args: any[]) =>
       Promise.all(Array.from(effects, effect => effect(...args)))
     )
 
@@ -60,8 +60,8 @@ export class Channel<T = any, U = any> {
 
   /** Listen for the next call or until disposed. */
   once(effect: ChannelEffect<T, U>): DisposableEffect<T, U> {
-    const once = this.on(
-      (...args: any): any => (once.dispose(), effect(...args))
+    const once = (this as any).on(
+      (...args: any) => (once.dispose(), (effect as any)(...args))
     )
     once.effect = effect
     return once
