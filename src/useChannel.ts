@@ -7,23 +7,23 @@ import { ChannelEffect } from './types'
 const noop = Function.prototype
 
 /** Add an effect to a channel */
-export function useChannel<T = void, U = void>(
+export function useChannel<T = void, U = any>(
   channel: Channel<T, U> | undefined,
   effect: ChannelEffect<T, U> | undefined,
   deps?: any[]
 ): void
 
 /** Create a channel */
-export function useChannel<T = void, U = void>(name?: string): Channel<T, U>
+export function useChannel<T = void, U = any>(name?: string): Channel<T, U>
 
 /** Create a channel with an effect */
-export function useChannel<T = void, U = void>(
+export function useChannel<T = void, U = any>(
   effect: ChannelEffect<T, U>,
   deps?: any[]
 ): Channel<T, U>
 
 /** Create a channel with an effect */
-export function useChannel<T = void, U = void>(
+export function useChannel<T = void, U = any>(
   name: string,
   effect: ChannelEffect<T, U> | undefined,
   deps?: any[]

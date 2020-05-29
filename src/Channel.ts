@@ -3,7 +3,7 @@ import { AsyncFunction, ChannelEffect, DisposableEffect } from './types'
 
 export type ChannelArgs<T> = Parameters<ChannelEffect<T>>
 
-export interface Channel<T = void, U = void> {
+export interface Channel<T = void, U = any> {
   (...args: ChannelArgs<T>): Promise<U[]>
   once(effect: ChannelEffect<T, U>): DisposableEffect<T, U>
 }
@@ -18,7 +18,7 @@ export interface Channel<T = void, U = void> {
  * Its `U` type is the expected return type of any effect functions that react
  * to the channel (eg: `U = Promise<void> | void`).
  */
-export class Channel<T = void, U = void> {
+export class Channel<T = void, U = any> {
   /** The channel name. Useful for debugging. */
   readonly name!: string
   protected effects!: Set<ChannelEffect<T, U>>
