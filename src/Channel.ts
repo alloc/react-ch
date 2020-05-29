@@ -1,8 +1,10 @@
 import { is } from '@alloc/is'
 import { AsyncFunction, ChannelEffect, DisposableEffect } from './types'
 
+export type ChannelArgs<T> = Parameters<ChannelEffect<T>>
+
 export interface Channel<T = void, U = void> {
-  (...args: Parameters<ChannelEffect<T>>): Promise<U[]>
+  (...args: ChannelArgs<T>): Promise<U[]>
   once(effect: ChannelEffect<T, U>): DisposableEffect<T, U>
 }
 
