@@ -18,7 +18,7 @@ export interface Channel<T = void, U = any> {
  * Its `U` type is the expected return type of any effect functions that react
  * to the channel (eg: `U = Promise<void> | void`).
  */
-export class Channel<T = void, U = any> {
+export class Channel<T = void, U = any> implements Function {
   /** The channel name. Useful for debugging. */
   readonly name!: string
   protected effects!: Set<ChannelEffect<T, U>>
@@ -69,3 +69,8 @@ export class Channel<T = void, U = any> {
     return once
   }
 }
+
+// Ensure `instanceof Function` returns true for Channel objects.
+// Use `setPrototypeOf` instead of `extends` so a Function object
+// is not created by `super` only to be thrown away.
+Object.setPrototypeOf(Channel.prototype, Function.prototype)
