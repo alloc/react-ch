@@ -1,18 +1,19 @@
 import { is } from '@alloc/is'
 import { flushMicroTasks } from 'flush-microtasks'
+import { describe, expect, it, Mock, vi } from 'vitest'
 import { Channel } from '../src/Channel'
 
-const getCalls = (channel: Channel) =>
+const getCalls = (channel: Channel<any>) =>
   Array.from(
-    channel['effects'] as Set<jest.Mock>,
+    channel['effects'] as Set<Mock>,
     effect => effect.mock && effect.mock.calls
   ).filter(Boolean)
 
 describe('Channel', () => {
   it('can pass variable arguments to effect functions', () => {
     const test = new Channel<[number, number]>()
-    test.on(jest.fn())
-    test.on(jest.fn())
+    test.on(vi.fn())
+    test.on(vi.fn())
     test(1, 2)
     test(3, 4)
     expect(getCalls(test)).toMatchSnapshot()
@@ -20,8 +21,8 @@ describe('Channel', () => {
 
   it('can pass nothing to effect functions', () => {
     const test = new Channel<void>()
-    test.on(jest.fn())
-    test.on(jest.fn())
+    test.on(vi.fn())
+    test.on(vi.fn())
     test()
     test()
     expect(getCalls(test)).toMatchSnapshot()
@@ -30,7 +31,7 @@ describe('Channel', () => {
   it('can remove an effect during emit', () => {
     const test = new Channel()
     const sub = test.on(() => sub.dispose())
-    test.on(jest.fn())
+    test.on(vi.fn())
     test()
     expect(getCalls(test)).toMatchSnapshot()
   })
@@ -47,7 +48,7 @@ describe('Channel', () => {
   describe('when an effect is added with .once()', () => {
     it('only calls the effect once', () => {
       const test = new Channel()
-      test.once(jest.fn())
+      test.once(vi.fn())
       expect(getCalls(test)).toMatchSnapshot()
     })
   })

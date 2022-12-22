@@ -1,36 +1,36 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`Channel can pass nothing to effect functions 1`] = `
-Array [
-  Array [
-    Array [],
-    Array [],
+exports[`Channel > can pass nothing to effect functions 1`] = `
+[
+  [
+    [],
+    [],
   ],
-  Array [
-    Array [],
-    Array [],
+  [
+    [],
+    [],
   ],
 ]
 `;
 
-exports[`Channel can pass variable arguments to effect functions 1`] = `
-Array [
-  Array [
-    Array [
+exports[`Channel > can pass variable arguments to effect functions 1`] = `
+[
+  [
+    [
       1,
       2,
     ],
-    Array [
+    [
       3,
       4,
     ],
   ],
-  Array [
-    Array [
+  [
+    [
       1,
       2,
     ],
-    Array [
+    [
       3,
       4,
     ],
@@ -38,12 +38,12 @@ Array [
 ]
 `;
 
-exports[`Channel can remove an effect during emit 1`] = `
-Array [
-  Array [
-    Array [],
+exports[`Channel > can remove an effect during emit 1`] = `
+[
+  [
+    [],
   ],
 ]
 `;
 
-exports[`Channel when an effect is added with .once() only calls the effect once 1`] = `Array []`;
+exports[`Channel > when an effect is added with .once() > only calls the effect once 1`] = `[]`;

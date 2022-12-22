@@ -1,5 +1,7 @@
+// @vitest-environment happy-dom
 import { render } from '@testing-library/react'
 import React from 'react'
+import { describe, expect, it, vi } from 'vitest'
 import { Channel, ChannelEffect, useChannel } from '../src'
 
 describe('useChannel', () => {
@@ -58,8 +60,8 @@ describe('useChannel', () => {
 
     describe('when the 2nd arg is an effect', () => {
       it('only reacts after the 1st commit', () => {
-        let channel!: Channel
-        const effect = jest.fn()
+        let channel!: Channel<any>
+        const effect = vi.fn()
         const Test = () => {
           channel = useChannel('test', effect)
 
@@ -75,7 +77,7 @@ describe('useChannel', () => {
 
       it('stops reacting after unmount', () => {
         let channel!: Channel
-        const effect = jest.fn()
+        const effect = vi.fn()
         const Test = () => {
           channel = useChannel('test', effect)
           return null
@@ -92,8 +94,8 @@ describe('useChannel', () => {
 
   describe('when the 1st arg is a channel', () => {
     it('reacts to the channel while mounted', () => {
-      const channel = new Channel()
-      const effect = jest.fn()
+      const channel = new Channel<any>()
+      const effect = vi.fn()
       const Test = () => {
         useChannel(channel, effect)
         return null
@@ -111,9 +113,9 @@ describe('useChannel', () => {
     })
 
     it('replaces the effect on re-render', () => {
-      const channel = new Channel()
-      const effect1 = jest.fn()
-      const effect2 = jest.fn()
+      const channel = new Channel<any>()
+      const effect1 = vi.fn()
+      const effect2 = vi.fn()
       const Test = ({ effect }: { effect: ChannelEffect }) => {
         useChannel(channel, effect)
         return null
