@@ -6,6 +6,9 @@ export type ChannelArgs<T> = Parameters<ChannelEffect<T>>
 export interface Channel<T = void, U = any> {
   (...args: ChannelArgs<T>): Promise<U[]>
   once(effect: ChannelEffect<T, U>): DisposableEffect<T, U>
+  /** The channel name. Useful for debugging. */
+  readonly name: string
+  readonly effects: ReadonlySet<ChannelEffect<T, U>>
 }
 
 /**
@@ -20,10 +23,6 @@ export interface Channel<T = void, U = any> {
  * to the channel.
  */
 export class Channel<T = void, U = any> implements Function {
-  /** The channel name. Useful for debugging. */
-  readonly name!: string
-  protected effects!: Set<ChannelEffect<T, U>>
-
   /** Override this to wrap every channel emitter. */
   static wrapEmit: AsyncFunction = emit => emit
 
@@ -52,11 +51,12 @@ export class Channel<T = void, U = any> implements Function {
 
   /** Listen until disposed. */
   on(effect: ChannelEffect<T, U>): DisposableEffect<T, U> {
-    this.effects.add(effect)
+    const effects = this.effects as Set<ChannelEffect<T, U>>
+    effects.add(effect)
     return {
       effect,
       dispose: () => {
-        this.effects.delete(effect)
+        effects.delete(effect)
       },
     }
   }
