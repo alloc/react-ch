@@ -24,7 +24,7 @@ export interface Channel<T = void, U = any> {
  */
 export class Channel<T = void, U = any> implements Function {
   /** Override this to wrap every channel emitter. */
-  static wrapEmit: AsyncFunction = emit => emit
+  static wrapEmit = (emit: AsyncFunction) => emit
 
   constructor(name?: string, effect?: ChannelEffect<T, U>)
   constructor(effect: ChannelEffect<T, U>)
